@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/categoryCard.dart';
+import '../widgets/category_card.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key, required this.title});
@@ -19,7 +19,8 @@ class _CategoriesScreen extends State<CategoriesScreen> {
     "Abilities",
     "Items",
     "Types",
-    "Natures"
+    "Natures",
+    "berry",
   ];
 
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/pokemonModel.dart';
+import '../models/pokemon_model.dart';
 import '../main.dart';
-import '../widgets/pokemonCard.dart';
+import '../widgets/pokemon/pokemon_card.dart';
 
 class PartyScreen extends StatefulWidget {
   const PartyScreen({super.key, required this.title});

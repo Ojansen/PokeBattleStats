@@ -1,10 +1,11 @@
-
 class PokemonModel {
   int id;
   String name;
   String type;
   String sprite;
   // String abilities;
+  List<dynamic> stats;
+  List<dynamic> moves;
 
   PokemonModel({
     required this.id,
@@ -12,11 +13,13 @@ class PokemonModel {
     required this.type,
     required this.sprite,
     // required this.abilities,
+    required this.stats,
+    required this.moves,
   });
 
   @override
   String toString() =>
-      'Pokemon: #$id, $name - $type type';
+      '$name #$id, $type type';
 
   factory PokemonModel.fromJson(Map<String, dynamic> json) {
     return PokemonModel(
@@ -25,7 +28,8 @@ class PokemonModel {
       type: json['types'][0]['type']['name'],
       sprite: json['sprites']['other']['official-artwork']['front_default'],
       // abilities: json['abilities']['ability']['name'],
+      stats: json['stats'],
+      moves: json['moves'],
     );
   }
-
 }

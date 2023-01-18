@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screens/search.dart';
+import '../screens/search_screen.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({super.key, required this.name});
@@ -7,7 +7,7 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 100,
       child: Card(
           elevation: 0,
@@ -21,7 +21,7 @@ class CategoryCard extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => SearchPage(category: name),
+                builder: (BuildContext context) => SearchScreen(category: name),
               ),
             ),
             child: Center(

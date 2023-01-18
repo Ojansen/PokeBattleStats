@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'screens/categories.dart';
-import 'screens/home.dart';
-import 'screens/party.dart';
+import 'screens/category_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/party_screen.dart';
 
 class NavigationBottomBar extends StatefulWidget {
   const NavigationBottomBar({super.key});

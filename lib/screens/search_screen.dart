@@ -3,19 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/pokemonModel.dart';
-import '../widgets/pokemonCard.dart';
+import '../models/pokemon_model.dart';
+import '../widgets/pokemon/pokemon_card.dart';
 
-class SearchPage extends StatefulWidget {
-  const SearchPage({super.key, required this.category});
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key, required this.category});
 
   final String category;
 
   @override
-  State<SearchPage> createState() => _SearchPage();
+  State<SearchScreen> createState() => _SearchScreen();
 }
 
-class _SearchPage extends State<SearchPage> {
+class _SearchScreen extends State<SearchScreen> {
   late TextEditingController _searchFieldController;
   late dynamic result = const Text("init");
   late dynamic model;
@@ -68,10 +68,7 @@ class _SearchPage extends State<SearchPage> {
                 }
               },
             ),
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: result,
-            ),
+            result
           ],
         ),
       )
