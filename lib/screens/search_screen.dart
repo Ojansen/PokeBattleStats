@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:poke_battle_stats/models/type_modal.dart';
 
 import '../models/pokemon_model.dart';
 import '../widgets/pokemon/pokemon_card.dart';
@@ -24,11 +25,19 @@ class _SearchScreen extends State<SearchScreen> {
   void getModel(String category, String searchValue, dynamic responseBody) {
     switch (category) {
       case "Pokemon":
-        PokemonModel searchedPokemon = PokemonModel.fromJson(jsonDecode(responseBody));
+        PokemonModel searchedPokemon = PokemonModel.fromJson(responseBody);
         setState(() {
           result = PokemonCard(pokemon: searchedPokemon);
         });
         break;
+      case "Type":
+        TypeModal searchedType = TypeModal.fromJson(responseBody);
+        setState(() {
+          result = Text(searchedType.name);
+        });
+        break;
+      case "Natures":
+
     }
 
   }
@@ -60,10 +69,10 @@ class _SearchScreen extends State<SearchScreen> {
               onSubmitted: (String value) async {
                 var response = await http.get(Uri.parse('https://pokeapi.co/api/v2/${widget.category.toLowerCase()}/$value'));
                 if (response.statusCode == 200) {
-                  getModel(widget.category, value, response.body);
+                  getModel(widget.category, value, jsonDecode(response.body));
                 } else {
                   setState(() {
-                    result = const Text('Failed to load Pokemon');
+                    result = Text('Failed to load ${widget.category}');
                   });
                 }
               },

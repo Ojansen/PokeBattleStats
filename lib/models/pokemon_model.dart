@@ -1,3 +1,5 @@
+import 'package:sqflite/sqflite.dart';
+
 class PokemonModel {
   int id;
   String name;
@@ -18,8 +20,7 @@ class PokemonModel {
   });
 
   @override
-  String toString() =>
-      '$name #$id, $type type';
+  String toString() => '$name #$id, $type type';
 
   factory PokemonModel.fromJson(Map<String, dynamic> json) {
     return PokemonModel(
@@ -31,5 +32,17 @@ class PokemonModel {
       stats: json['stats'],
       moves: json['moves'],
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'type': type,
+      'sprite': sprite,
+      // 'abilities': abilities,
+      // 'stats': stats,
+      // 'moves': moves,
+    };
   }
 }

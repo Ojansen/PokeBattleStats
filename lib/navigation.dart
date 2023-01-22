@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:poke_battle_stats/providers/pokemon_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/category_screen.dart';
 import 'screens/home_screen.dart';

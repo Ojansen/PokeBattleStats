@@ -18,7 +18,7 @@ class _CategoriesScreen extends State<CategoriesScreen> {
     "Moves",
     "Abilities",
     "Items",
-    "Types",
+    "Type",
     "Natures",
     "berry",
   ];
