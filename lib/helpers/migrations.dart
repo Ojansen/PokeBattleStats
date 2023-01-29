@@ -13,17 +13,17 @@ class Migrations {
   }
 
   void _createTablePokemon(Batch batch) {
-    batch.execute('DROP TABLE IF EXISTS pokemon');
-    batch.execute('''CREATE TABLE pokemon (id INTEGER PRIMARY KEY, name TEXT, type TEXT, sprite TEXT, stats BLOB, moves BLOB)''');
+    batch.execute('DROP TABLE IF EXISTS Pokemon');
+    batch.execute('''CREATE TABLE Pokemon (id INTEGER PRIMARY KEY, pokemonJson TEXT)''');
   }
 
   void _createTableTypes(Batch batch) {
-    batch.execute('DROP TABLE IF EXISTS type');
-    batch.execute('''CREATE TABLE type (id INTEGER PRIMARY KEY, name TEXT, damage_class TEXT, damage_relation BLOB, moves BLOb, pokemon BLOB)''');
+    batch.execute('DROP TABLE IF EXISTS Type');
+    batch.execute('''CREATE TABLE Type (id INTEGER PRIMARY KEY, typeJson TEXT)''');
   }
 
   void _createTableNature(Batch batch) {
-    batch.execute('DROP TABLE IF EXISTS nature');
-    batch.execute('''CREATE TABLE nature (id INTEGER PRIMARY KEY, name TEXT, increased_stat TEXT, decreased_stat TEXT, hates_flavor TEXT)''');
+    batch.execute('DROP TABLE IF EXISTS Nature');
+    batch.execute('''CREATE TABLE Nature (id INTEGER PRIMARY KEY, natureJson TEXT)''');
   }
 }

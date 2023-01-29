@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:poke_battle_stats/widgets/type/type_grid.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
@@ -37,56 +38,58 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: FutureBuilder<dynamic>(
-          future: _allTypes,
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            List<Widget> children;
-            if (snapshot.hasData) {
-              children = <Widget>[
-                const Icon(
-                  Icons.check_circle_outline,
-                  color: Colors.green,
-                  size: 60,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text('Result: ${snapshot.data}'),
-                ),
-              ];
-            } else if (snapshot.hasError) {
-              children = <Widget>[
-                const Icon(
-                  Icons.error_outline,
-                  color: Colors.red,
-                  size: 60,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text('Error: ${snapshot.error}'),
-                ),
-              ];
-            } else {
-              children = const <Widget>[
-                SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: CircularProgressIndicator(),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 16),
-                  child: Text('Awaiting result...'),
-                ),
-              ];
-            }
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: children,
-              ),
-            );
-          },
-        ),
+      body: const Center(
+        child: Text("data"),
+        //TypeGrid(),
+        // FutureBuilder<dynamic>(
+        //   future: _allTypes,
+        //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        //     List<Widget> children;
+        //     if (snapshot.hasData) {
+        //       children = <Widget>[
+        //         const Icon(
+        //           Icons.check_circle_outline,
+        //           color: Colors.green,
+        //           size: 60,
+        //         ),
+        //         Padding(
+        //           padding: const EdgeInsets.only(top: 16),
+        //           child: Text('Result: ${snapshot.data}'),
+        //         ),
+        //       ];
+        //     } else if (snapshot.hasError) {
+        //       children = <Widget>[
+        //         const Icon(
+        //           Icons.error_outline,
+        //           color: Colors.red,
+        //           size: 60,
+        //         ),
+        //         Padding(
+        //           padding: const EdgeInsets.only(top: 16),
+        //           child: Text('Error: ${snapshot.error}'),
+        //         ),
+        //       ];
+        //     } else {
+        //       children = const <Widget>[
+        //         SizedBox(
+        //           width: 60,
+        //           height: 60,
+        //           child: CircularProgressIndicator(),
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(top: 16),
+        //           child: Text('Awaiting result...'),
+        //         ),
+        //       ];
+        //     }
+        //     return Center(
+        //       child: Column(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: children,
+        //       ),
+        //     );
+        //   },
+        // ),
       ),
     );
   }

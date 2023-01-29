@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:poke_battle_stats/models/pokemon_model.dart';
@@ -6,13 +7,13 @@ import 'package:sqflite/sqflite.dart';
 
 class PokemonProvider extends ChangeNotifier {
   final List<PokemonModel>  pokemonListState;
-  String table = "pokemon";
+  String table = "Pokemon";
   final Database db;
 
   PokemonProvider(this.db, this.pokemonListState);
 
   Future<void> addPokemon(PokemonModel pokemon) async {
-    await db.insert(table, pokemon.toMap(), conflictAlgorithm: ConflictAlgorithm.replace,);
+    await db.insert(table, {"id": pokemon.id, "pokemonJson": jsonEncode(pokemon)});
     pokemonListState.add(pokemon);
     notifyListeners();
   }

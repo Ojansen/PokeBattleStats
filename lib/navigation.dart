@@ -46,7 +46,6 @@ class _NavigationBottomBarState extends State<NavigationBottomBar> {
         ],
       ),
       body: <Widget>[
-        // const MyPartyPage(title: 'Home'),
         const PartyScreen(title: 'Party'),
         const HomeScreen(title: "Homepage"),
         const CategoriesScreen(title: "Categories"),

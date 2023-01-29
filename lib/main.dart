@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 import 'package:poke_battle_stats/helpers/migrations.dart';
+import 'package:poke_battle_stats/models/all_nature_model.dart';
+import 'package:poke_battle_stats/models/type_model.dart';
 import 'package:poke_battle_stats/providers/pokemon_provider.dart';
+import 'package:poke_battle_stats/providers/type_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'models/pokemon_model.dart';
@@ -39,103 +43,90 @@ void main() async {
   }
 
   var db = await openDatabase(path, version: migration.version, onCreate: migration.createDatabase);
+  List<PokemonModel> pokemonList = await _futurePokemonList(db);
+  // List<PokemonModel> pokemonList = [];
+  List<TypeModel> typeList = [];
+  // List<TypeModel> typeList = await _futureTypeList(db);
+  // List<AllNatureModel> allNatureList = await _futureAllNatureList(db);
+
+  // await deleteDatabase(path);
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TypeProvider>(create: (context) => TypeProvider(db, typeList)),
+        ChangeNotifierProvider<PokemonProvider>(create: (context) => PokemonProvider(db, pokemonList)),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          useMaterial3: true,
+        ),
+        home: const NavigationBottomBar(),
+      ),
+    ),
+  );
+}
+
+Future<dynamic> _futureAllNatureList(Database db) async {
+  var response = await http.get(Uri.parse("https://pokeapi.co/api/v2/nature/"));
+  if (response.statusCode == 200) {
+    AllNatureModel allNatures = AllNatureModel.fromJson(jsonDecode(response.body));
+    print(allNatures.results);
+    allNatures.results?.forEach((element) {print(element.name);});
+  }
+}
+
+Future<dynamic> _futureTypeList(Database db) async {
+  List<Map<String, dynamic>> list = await db.query('type');
+  if (list.isNotEmpty) {
+    print("List is not empty");
+    List<TypeModel> result = [];
+
+    for (Map<String, dynamic> map in list) {
+      result.add(TypeModel(
+        id: map['id'],
+        name: map['name'],
+        // damageClass: map['damageClass'],
+        doubleTo: map['doubleTo'],
+        halfTo: map['halfTo'],
+        noTo: map['noTo'],
+      ));
+    }
+    return result;
+  } else {
+    var response = await http.get(Uri.parse('https://pokeapi.co/api/v2/type'));
+    if (response.statusCode == 200) {
+      List<dynamic> types = [];
+      jsonDecode(response.body)['results'].forEach((row) {
+        types.add(row['url']);
+      });
+
+      List<TypeModel> type = [];
+      for (var index in types) {
+        var typeRequest = await http.get(Uri.parse(index));
+        if (jsonDecode(typeRequest.body)['id'] < 19) {
+          type.add(TypeModel.fromJson(
+            jsonDecode(typeRequest.body),
+          ));
+          db.insert('type', TypeModel.fromJson(jsonDecode(typeRequest.body)).toMap());
+        }
+      }
+      return type;
+    }
+  }
+}
+
+Future<List<PokemonModel>> _futurePokemonList(Database db) async {
   List<Map<String, dynamic>> list = await db.query('pokemon');
   List<PokemonModel> result = [];
 
+  // print(list);
+
   for (Map<String, dynamic> map in list) {
-    result.add(PokemonModel(
-      id: map['id'],
-      name: map['name'],
-      type: map['type'],
-      sprite: map['sprite'],
-      stats: map['stats'] ?? [],
-      moves: map['moves'] ?? [],
-    ));
+    print(map['pokemonJson']);
+    result.add(PokemonModel.fromJson(jsonDecode(map['pokemonJson'])));
+    // print(PokemonModel.fromJson(map['id']));
   }
-  print(result);
-
-  runApp(MyApp(pokemonDatabase: db, pokemonListState: result));
-}
-
-class MyApp extends StatelessWidget {
-  final Database pokemonDatabase;
-  final List<PokemonModel> pokemonListState;
-
-  const MyApp({super.key, required this.pokemonDatabase, required this.pokemonListState});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<PartyListState>(create: (context) => PartyListState()),
-        ChangeNotifierProvider<PokemonProvider>(
-            create: (context) => PokemonProvider(pokemonDatabase, pokemonListState)),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(primarySwatch: Colors.red),
-        home: const NavigationBottomBar(),
-      ),
-    );
-  }
-}
-
-class PartyListState extends ChangeNotifier {
-  List<PokemonModel> partyListState = [
-    PokemonModel(
-      id: 493,
-      name: "arceus",
-      type: "normal",
-      sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/493.png",
-      // abilities: "None",
-      stats: [
-        {
-          "base_stat": 120,
-          "effort": 3,
-          "stat": {"name": "hp", "url": "https://pokeapi.co/api/v2/stat/1/"}
-        },
-        {
-          "base_stat": 120,
-          "effort": 0,
-          "stat": {"name": "attack", "url": "https://pokeapi.co/api/v2/stat/2/"}
-        },
-        {
-          "base_stat": 120,
-          "effort": 0,
-          "stat": {"name": "defense", "url": "https://pokeapi.co/api/v2/stat/3/"}
-        },
-        {
-          "base_stat": 120,
-          "effort": 0,
-          "stat": {"name": "special-attack", "url": "https://pokeapi.co/api/v2/stat/4/"}
-        },
-        {
-          "base_stat": 120,
-          "effort": 0,
-          "stat": {"name": "special-defense", "url": "https://pokeapi.co/api/v2/stat/5/"}
-        },
-        {
-          "base_stat": 120,
-          "effort": 0,
-          "stat": {"name": "speed", "url": "https://pokeapi.co/api/v2/stat/6/"}
-        }
-      ],
-      moves: [
-        {
-          "move": {"name": "pound", "url": "https://pokeapi.co/api/v2/move/1/"},
-          "version_group_details": [
-            {
-              "level_learned_at": 0,
-              "move_learn_method": {"name": "machine", "url": "https://pokeapi.co/api/v2/move-learn-method/4/"},
-            },
-          ]
-        }
-      ],
-    )
-  ];
-
-  void addPokemon(PokemonModel pokemon) {
-    partyListState.add(pokemon);
-    notifyListeners();
-  }
+  return result;
 }

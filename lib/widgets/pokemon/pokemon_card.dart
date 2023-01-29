@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:poke_battle_stats/providers/pokemon_provider.dart';
 import 'package:poke_battle_stats/screens/pokemon_detail_screen.dart';
@@ -5,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../../models/pokemon_model.dart';
 
 class PokemonCard extends StatelessWidget {
-
   const PokemonCard({super.key, required this.pokemon, this.exists = false});
 
   final PokemonModel pokemon;
@@ -16,22 +16,23 @@ class PokemonCard extends StatelessWidget {
     var model = Provider.of<PokemonProvider>(context);
 
     return Card(
-      child: InkWell(
-        onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => PokemonDetailScreen(pokemon: pokemon),
+      child: ListTile(
+        leading: SizedBox(
+          width: 50,
+          child: CachedNetworkImage(
+            imageUrl: pokemon.sprites?.other?.officialArtwork?.frontDefault as String,
+          ),
         ),
-      ),
-        child: ListTile(
-          leading: Image.network(pokemon.sprite),
-          title: Text(pokemon.name),
-          subtitle: Text(pokemon.toString()),
-          trailing: InkWell(
-            onTap: () {
-              exists ? model.removeById(pokemon.id) : model.addPokemon(pokemon);
-            },
-            child: exists ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline),
+        title: Text(pokemon.name as String),
+        subtitle: Text("${pokemon.id}"),
+        trailing: IconButton(
+          onPressed: () => exists ? model.removeById(pokemon.id as int) : model.addPokemon(pokemon),
+          icon: exists ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline),
+        ),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => PokemonDetailScreen(pokemon: pokemon),
           ),
         ),
       ),
