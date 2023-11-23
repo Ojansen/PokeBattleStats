@@ -30,23 +30,5 @@ class PokemonProvider extends ChangeNotifier {
 
   Future<List<Map<String, Object?>>> getAll() async {
     return await db.query(table);
-    // print(await db.query('pokemon'));
-    // return map;
-    // pokemonList.add(map);
-    // pokemonList.addAll(
-    //   return List.generate(map.length, (index) {
-    //     return PokemonModel(
-    //       id: map[index]['id'],
-    //       name: map[index]['name'],
-    //       type: map[index]['type'],
-    //       sprite: map[index]['sprite'],
-    //       // abilities: json['abilities']['ability']['name'],
-    //       stats: map[index]['stats'],
-    //       moves: map[index]['moves'],
-    //     );
-    //   });
-    // );
-    // print(pokemonList);
-    // notifyListeners();
   }
 }

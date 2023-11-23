@@ -1,35 +1,41 @@
 import 'package:flutter/material.dart';
-import '../screens/search_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({super.key, required this.name});
+  const CategoryCard({super.key, required this.name, required this.screen});
+
   final String name;
+  final Widget screen;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-      child: Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: Theme.of(context).colorScheme.outline,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => screen,
           ),
-          child: InkWell(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => SearchScreen(category: name),
-              ),
+        ),
+        child: SizedBox(
+          height: 100,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: const BorderRadius.all(Radius.circular(32)),
             ),
             child: Center(
               child: Text(
                 name,
+                style: GoogleFonts.comfortaa(
+                  textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

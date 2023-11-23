@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:poke_battle_stats/models/nature_model.dart';
 import 'package:poke_battle_stats/models/type_model.dart';
 
 import '../models/pokemon_model.dart';
@@ -36,12 +35,6 @@ class _SearchScreen extends State<SearchScreen> {
           result = Text(searchedType.name);
         });
         break;
-      case "Nature":
-        NatureModel searchedNature = NatureModel.fromJson(responseBody);
-        setState(() {
-          result = Text("${searchedNature.increasedStat?.name}");
-        });
-        break;
     }
   }
 
@@ -63,11 +56,11 @@ class _SearchScreen extends State<SearchScreen> {
         appBar: AppBar(
           title: Text(widget.category),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              TextField(
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextField(
                 controller: _searchFieldController,
                 onSubmitted: (String value) async {
                   var response =
@@ -81,12 +74,12 @@ class _SearchScreen extends State<SearchScreen> {
                   }
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: result,
-              )
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: result,
+            )
+          ],
         ));
   }
 }

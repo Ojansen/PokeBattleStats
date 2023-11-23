@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poke_battle_stats/models/pokemon_model.dart';
 import 'package:poke_battle_stats/providers/pokemon_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,11 +24,17 @@ class _PartyScreenState extends State<PartyScreen> {
       appBar: AppBar(
         title: Center(child: Text(widget.title)),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: pokemonList.pokemonListState.length,
-        itemBuilder: (context, index) => PokemonCard(
-          pokemon: pokemonList.pokemonListState[index],
-          exists: true,
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: PokemonCard(
+            pokemon: pokemonList.pokemonListState[index],
+            exists: true,
+          ),
+        ),
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 18,
         ),
       ),
       // body: FutureBuilder<dynamic>(

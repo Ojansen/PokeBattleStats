@@ -3,17 +3,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 import 'package:poke_battle_stats/helpers/migrations.dart';
 import 'package:poke_battle_stats/models/all_nature_model.dart';
 import 'package:poke_battle_stats/models/type_model.dart';
+import 'package:poke_battle_stats/providers/nature_provider.dart';
 import 'package:poke_battle_stats/providers/pokemon_provider.dart';
 import 'package:poke_battle_stats/providers/type_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'models/pokemon_model.dart';
-import 'package:path/path.dart';
 
+import 'constants.dart';
+import 'models/nature_model.dart';
+import 'models/pokemon_model.dart';
 import 'navigation.dart';
 
 void main() async {
@@ -47,7 +51,7 @@ void main() async {
   // List<PokemonModel> pokemonList = [];
   List<TypeModel> typeList = [];
   // List<TypeModel> typeList = await _futureTypeList(db);
-  // List<AllNatureModel> allNatureList = await _futureAllNatureList(db);
+  List<NatureModel> natureList = await _futureAllNatureList(db);
 
   // await deleteDatabase(path);
 
@@ -56,25 +60,36 @@ void main() async {
       providers: [
         ChangeNotifierProvider<TypeProvider>(create: (context) => TypeProvider(db, typeList)),
         ChangeNotifierProvider<PokemonProvider>(create: (context) => PokemonProvider(db, pokemonList)),
+        ChangeNotifierProvider<NatureProvider>(create: (context) => NatureProvider(db, natureList)),
       ],
       child: MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.red,
-          useMaterial3: true,
-        ),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blueGrey,
+            ),
+            textTheme: GoogleFonts.interTextTheme()),
         home: const NavigationBottomBar(),
+        debugShowCheckedModeBanner: false,
       ),
     ),
   );
 }
 
 Future<dynamic> _futureAllNatureList(Database db) async {
-  var response = await http.get(Uri.parse("https://pokeapi.co/api/v2/nature/"));
+  var response = await http.get(Uri.parse("https://pokeapi.co/api/v2/nature/?limit=25"));
+  List<NatureModel> mapOfNatures = [];
   if (response.statusCode == 200) {
     AllNatureModel allNatures = AllNatureModel.fromJson(jsonDecode(response.body));
-    print(allNatures.results);
-    allNatures.results?.forEach((element) {print(element.name);});
+    allNatures.results?.forEach((element) async {
+      var natureResponse = await http.get(Uri.parse(element.url as String));
+      if (natureResponse.statusCode == 200) {
+        await db.insert(natureTable, {"natureJson": jsonEncode(natureResponse.body)});
+        mapOfNatures.add(NatureModel.fromJson(jsonDecode(natureResponse.body)));
+      }
+    });
   }
+
+  return mapOfNatures;
 }
 
 Future<dynamic> _futureTypeList(Database db) async {
@@ -121,12 +136,10 @@ Future<List<PokemonModel>> _futurePokemonList(Database db) async {
   List<Map<String, dynamic>> list = await db.query('pokemon');
   List<PokemonModel> result = [];
 
-  // print(list);
-
   for (Map<String, dynamic> map in list) {
-    print(map['pokemonJson']);
-    result.add(PokemonModel.fromJson(jsonDecode(map['pokemonJson'])));
-    // print(PokemonModel.fromJson(map['id']));
+    result.add(
+      PokemonModel.fromJson(jsonDecode(map['pokemonJson'])),
+    );
   }
   return result;
 }

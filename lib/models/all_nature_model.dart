@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:poke_battle_stats/models/nature_model.dart';
 
 part 'all_nature_model.g.dart';
 

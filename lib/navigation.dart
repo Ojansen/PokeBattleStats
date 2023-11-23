@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poke_battle_stats/providers/pokemon_provider.dart';
-import 'package:provider/provider.dart';
 
 import 'screens/category_screen.dart';
 import 'screens/home_screen.dart';
@@ -47,7 +45,7 @@ class _NavigationBottomBarState extends State<NavigationBottomBar> {
       ),
       body: <Widget>[
         const PartyScreen(title: 'Party'),
-        const HomeScreen(title: "Homepage"),
+        const HomeScreen(title: "Effective chart"),
         const CategoriesScreen(title: "Categories"),
       ][currentPageIndex],
     );

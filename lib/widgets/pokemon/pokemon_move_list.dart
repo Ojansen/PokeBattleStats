@@ -8,16 +8,23 @@ class PokemonMoveList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Row> allMoves = [];
+    pokemon.moves?.forEach((Move element) {
+      allMoves.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("${element.move?.name}"),
+          Text("${element.versionGroupDetails?[0].moveLearnMethod?.name}"),
+          Text("${element.versionGroupDetails?[0].levelLearnedAt}")
+        ],
+      ));
+    });
     return SizedBox(
-      height: 100,
-      child: ListView(
-        children: const [
-          Text("move"),
-        ]
-          // for (var element in moves) {
-          //   Text(element['move']['name']);
-          // }
-
+      height: 300,
+      child: Padding( padding: const EdgeInsets.all(16.0),
+        child:ListView(
+          children: allMoves,
+        ),
       ),
     );
   }
