@@ -13,7 +13,11 @@ class TypeProvider extends ChangeNotifier {
   TypeProvider(this.db, this.typeList);
 
   Future<void> addPokemon(TypeModel type) async {
-    await db.insert(table, type.toMap(), conflictAlgorithm: ConflictAlgorithm.replace,);
+    await db.insert(
+      table,
+      type.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
     notifyListeners();
   }
 
@@ -29,6 +33,4 @@ class TypeProvider extends ChangeNotifier {
   Future<List<Map<String, dynamic>>> getAll() async {
     return await db.query(table);
   }
-
-
 }

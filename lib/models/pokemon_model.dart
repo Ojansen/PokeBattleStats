@@ -454,13 +454,13 @@ class Sprites {
 
   Sprites copyWith({
     String? backDefault,
-    dynamic? backFemale,
+    dynamic backFemale,
     String? backShiny,
-    dynamic? backShinyFemale,
+    dynamic backShinyFemale,
     String? frontDefault,
-    dynamic? frontFemale,
+    dynamic frontFemale,
     String? frontShiny,
-    dynamic? frontShinyFemale,
+    dynamic frontShinyFemale,
     Other? other,
     Versions? versions,
     Sprites? animated,
@@ -551,12 +551,12 @@ class RedBlue {
   final dynamic frontTransparent;
 
   RedBlue copyWith({
-    dynamic? backDefault,
-    dynamic? backGray,
-    dynamic? backTransparent,
-    dynamic? frontDefault,
-    dynamic? frontGray,
-    dynamic? frontTransparent,
+    dynamic backDefault,
+    dynamic backGray,
+    dynamic backTransparent,
+    dynamic frontDefault,
+    dynamic frontGray,
+    dynamic frontTransparent,
   }) {
     return RedBlue(
       backDefault: backDefault ?? this.backDefault,
@@ -650,14 +650,14 @@ class Crystal {
   final dynamic frontTransparent;
 
   Crystal copyWith({
-    dynamic? backDefault,
-    dynamic? backShiny,
-    dynamic? backShinyTransparent,
-    dynamic? backTransparent,
-    dynamic? frontDefault,
-    dynamic? frontShiny,
-    dynamic? frontShinyTransparent,
-    dynamic? frontTransparent,
+    dynamic backDefault,
+    dynamic backShiny,
+    dynamic backShinyTransparent,
+    dynamic backTransparent,
+    dynamic frontDefault,
+    dynamic frontShiny,
+    dynamic frontShinyTransparent,
+    dynamic frontTransparent,
   }) {
     return Crystal(
       backDefault: backDefault ?? this.backDefault,
@@ -707,11 +707,11 @@ class Gold {
   final dynamic frontTransparent;
 
   Gold copyWith({
-    dynamic? backDefault,
-    dynamic? backShiny,
-    dynamic? frontDefault,
-    dynamic? frontShiny,
-    dynamic? frontTransparent,
+    dynamic backDefault,
+    dynamic backShiny,
+    dynamic frontDefault,
+    dynamic frontShiny,
+    dynamic frontTransparent,
   }) {
     return Gold(
       backDefault: backDefault ?? this.backDefault,
@@ -826,9 +826,9 @@ class Home {
 
   Home copyWith({
     String? frontDefault,
-    dynamic? frontFemale,
+    dynamic frontFemale,
     String? frontShiny,
-    dynamic? frontShinyFemale,
+    dynamic frontShinyFemale,
   }) {
     return Home(
       frontDefault: frontDefault ?? this.frontDefault,
@@ -895,7 +895,7 @@ class DreamWorld {
 
   DreamWorld copyWith({
     String? frontDefault,
-    dynamic? frontFemale,
+    dynamic frontFemale,
   }) {
     return DreamWorld(
       frontDefault: frontDefault ?? this.frontDefault,

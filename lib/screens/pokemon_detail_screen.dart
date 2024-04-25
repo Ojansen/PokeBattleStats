@@ -37,54 +37,62 @@ class _PokemonDetailScreen extends State<PokemonDetailScreen> {
       body: SizedBox(
         child: ListView(
           children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: CachedNetworkImage(
-                    height: 300,
-                    imageUrl: widget.pokemon.sprites?.other?.officialArtwork?.frontDefault as String,
-                    placeholder: (context, url) => const CircularProgressIndicator(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.pokemon.sprites?.other?.home?.frontDefault as String,
+                      placeholder: (context, url) => const CircularProgressIndicator(),
+                    ),
                   ),
-                ),
-                Center(
-                  child: Text(widget.pokemon.name as String,
-                      style: GoogleFonts.comfortaa(
-                        textStyle: const TextStyle(fontSize: 48),
-                      )),
-                ),
-                PokemonTypeList(pokemon: widget.pokemon),
-              ],
+                  const SizedBox(width: 16.0),
+                  Expanded(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.pokemon.sprites?.other?.home?.frontShiny as String,
+                      placeholder: (context, url) => const CircularProgressIndicator(),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            Center(
+              child: Text(widget.pokemon.name as String,
+                  style: GoogleFonts.comfortaa(
+                    textStyle: const TextStyle(fontSize: 48),
+                  )),
+            ),
+            PokemonTypeList(pokemon: widget.pokemon),
             Column(
               children: [
                 Row(
                   children: [
-                    Text("Abilities"),
+                    const Text("Abilities"),
                     Text("${widget.pokemon.abilities}"),
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Weakness"),
+                    const Text("Weakness"),
                     Text("${widget.pokemon.baseExperience}"),
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Base exp"),
+                    const Text("Base exp"),
                     Text("${widget.pokemon.baseExperience}"),
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Height"),
+                    const Text("Height"),
                     Text("${widget.pokemon.height}"),
                   ],
                 ),
                 Row(
                   children: [
-                    Text("Weight"),
+                    const Text("Weight"),
                     Text("${widget.pokemon.weight}"),
                   ],
                 ),

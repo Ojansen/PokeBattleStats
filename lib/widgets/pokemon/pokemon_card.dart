@@ -20,6 +20,7 @@ class PokemonCard extends StatelessWidget {
     var model = Provider.of<PokemonProvider>(context);
 
     return Container(
+      width: (MediaQuery.of(context).size.width * 1) - 32,
       height: 160,
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
@@ -34,53 +35,53 @@ class PokemonCard extends StatelessWidget {
             builder: (BuildContext context) => PokemonDetailScreen(pokemon: pokemon),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "#${pokemon.id}",
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        pokemon.name as String,
-                        style: GoogleFonts.comfortaa(
-                          textStyle: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 140,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "#${pokemon.id}",
+                            style: const TextStyle(fontSize: 16),
                           ),
-                        ),
+                          Text(
+                            pokemon.name as String,
+                            style: GoogleFonts.comfortaa(
+                              textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  PokemonTypeList(pokemon: pokemon),
-                ],
+                    ),
+                    PokemonTypeList(pokemon: pokemon),
+                  ],
+                ),
               ),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
+              const Spacer(),
+              Center(
+                child: CachedNetworkImage(
                   width: 150,
-                  child: CachedNetworkImage(
-                    imageUrl: pokemon.sprites?.other?.officialArtwork?.frontDefault as String,
-                  ),
+                  imageUrl: pokemon.sprites?.other?.home?.frontDefault as String,
                 ),
-                IconButton(
-                  onPressed: () => exists ? model.removeById(pokemon.id as int) : model.addPokemon(pokemon),
-                  icon: exists ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline),
-                ),
-              ],
-            ),
-          ],
+              ),
+              IconButton(
+                onPressed: () => exists ? model.removeById(pokemon.id as int) : model.addPokemon(pokemon),
+                icon: exists ? const Icon(Icons.favorite) : const Icon(Icons.favorite_outline),
+              ),
+            ],
+          ),
         ),
       ),
 

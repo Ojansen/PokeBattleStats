@@ -15,7 +15,7 @@ NatureModel _$NatureModelFromJson(Map<String, dynamic> json) => NatureModel(
           ? null
           : DecreasedStat.fromJson(
               json['hates_flavor'] as Map<String, dynamic>),
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       increasedStat: json['increased_stat'] == null
           ? null
           : DecreasedStat.fromJson(
@@ -66,8 +66,8 @@ Map<String, dynamic> _$DecreasedStatToJson(DecreasedStat instance) =>
 MoveBattleStylePreference _$MoveBattleStylePreferenceFromJson(
         Map<String, dynamic> json) =>
     MoveBattleStylePreference(
-      highHpPreference: json['high_hp_preference'] as int?,
-      lowHpPreference: json['low_hp_preference'] as int?,
+      highHpPreference: (json['high_hp_preference'] as num?)?.toInt(),
+      lowHpPreference: (json['low_hp_preference'] as num?)?.toInt(),
       moveBattleStyle: json['move_battle_style'] == null
           ? null
           : DecreasedStat.fromJson(
@@ -97,7 +97,7 @@ Map<String, dynamic> _$NameToJson(Name instance) => <String, dynamic>{
 PokeathlonStatChange _$PokeathlonStatChangeFromJson(
         Map<String, dynamic> json) =>
     PokeathlonStatChange(
-      maxChange: json['max_change'] as int?,
+      maxChange: (json['max_change'] as num?)?.toInt(),
       pokeathlonStat: json['pokeathlon_stat'] == null
           ? null
           : DecreasedStat.fromJson(

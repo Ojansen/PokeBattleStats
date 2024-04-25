@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:poke_battle_stats/models/type_model.dart';
+import 'package:poke_battle_stats/widgets/type/type_effectiveness.dart';
 
 import '../models/pokemon_model.dart';
 import '../widgets/pokemon/pokemon_card.dart';
@@ -32,7 +33,7 @@ class _SearchScreen extends State<SearchScreen> {
       case "Type":
         TypeModel searchedType = TypeModel.fromJson(responseBody);
         setState(() {
-          result = Text(searchedType.name);
+          result = TypeEffectiveness(type: searchedType);
         });
         break;
     }
@@ -75,8 +76,8 @@ class _SearchScreen extends State<SearchScreen> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const SizedBox(height: 24),
+            Expanded(
               child: result,
             )
           ],

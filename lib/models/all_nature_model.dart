@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:poke_battle_stats/models/nature_model.dart';
 
 part 'all_nature_model.g.dart';
 
@@ -20,7 +19,7 @@ class AllNatureModel {
   AllNatureModel copyWith({
     int? count,
     String? next,
-    dynamic? previous,
+    dynamic previous,
     List<Result>? results,
   }) {
     return AllNatureModel(

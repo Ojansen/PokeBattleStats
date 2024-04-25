@@ -7,11 +7,11 @@ class TypeLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bgColor= Colors.black12;
+    var bgColor = Colors.black12;
     var borderColor = Colors.black38;
     var textColor = Colors.black87;
 
-    switch(typeName) {
+    switch (typeName) {
       case "bug":
         bgColor = const Color(0xffA8B820);
         borderColor = const Color(0xff6D7815);
@@ -92,20 +92,17 @@ class TypeLabel extends StatelessWidget {
         borderColor = const Color(0xff445E9C);
         break;
     }
-    return Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: Container(
-        decoration: BoxDecoration(
+    return Container(
+      margin: const EdgeInsets.only(right: 8),
+      decoration: BoxDecoration(
           color: bgColor,
           border: Border.all(width: 1, color: borderColor),
-          borderRadius: const BorderRadius.all(Radius.circular(8.0))
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-          child: Text(
-            typeName!.toUpperCase(),
-            style: TextStyle(color: textColor, fontSize: 14),
-          ),
+          borderRadius: const BorderRadius.all(Radius.circular(8.0))),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        child: Text(
+          typeName!.toUpperCase(),
+          style: TextStyle(color: textColor, fontSize: 14),
         ),
       ),
     );

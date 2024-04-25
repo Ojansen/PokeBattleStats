@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poke_battle_stats/models/pokemon_model.dart';
 import 'package:poke_battle_stats/widgets/type/type_label.dart';
@@ -16,7 +17,7 @@ class PokemonTypeList extends StatelessWidget {
       );
     });
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: allTypes,
     );
   }

@@ -10,23 +10,23 @@ PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) => PokemonModel(
       abilities: (json['abilities'] as List<dynamic>?)
           ?.map((e) => Ability.fromJson(e as Map<String, dynamic>))
           .toList(),
-      baseExperience: json['base_experience'] as int?,
+      baseExperience: (json['base_experience'] as num?)?.toInt(),
       forms: (json['forms'] as List<dynamic>?)
           ?.map((e) => Species.fromJson(e as Map<String, dynamic>))
           .toList(),
       gameIndices: (json['game_indices'] as List<dynamic>?)
           ?.map((e) => GameIndex.fromJson(e as Map<String, dynamic>))
           .toList(),
-      height: json['height'] as int?,
+      height: (json['height'] as num?)?.toInt(),
       heldItems: json['held_items'] as List<dynamic>?,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       isDefault: json['is_default'] as bool?,
       locationAreaEncounters: json['location_area_encounters'] as String?,
       moves: (json['moves'] as List<dynamic>?)
           ?.map((e) => Move.fromJson(e as Map<String, dynamic>))
           .toList(),
       name: json['name'] as String?,
-      order: json['order'] as int?,
+      order: (json['order'] as num?)?.toInt(),
       pastTypes: json['past_types'] as List<dynamic>?,
       species: json['species'] == null
           ? null
@@ -40,7 +40,7 @@ PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) => PokemonModel(
       types: (json['types'] as List<dynamic>?)
           ?.map((e) => Type.fromJson(e as Map<String, dynamic>))
           .toList(),
-      weight: json['weight'] as int?,
+      weight: (json['weight'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$PokemonModelToJson(PokemonModel instance) =>
@@ -70,7 +70,7 @@ Ability _$AbilityFromJson(Map<String, dynamic> json) => Ability(
           ? null
           : Species.fromJson(json['ability'] as Map<String, dynamic>),
       isHidden: json['is_hidden'] as bool?,
-      slot: json['slot'] as int?,
+      slot: (json['slot'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AbilityToJson(Ability instance) => <String, dynamic>{
@@ -90,7 +90,7 @@ Map<String, dynamic> _$SpeciesToJson(Species instance) => <String, dynamic>{
     };
 
 GameIndex _$GameIndexFromJson(Map<String, dynamic> json) => GameIndex(
-      gameIndex: json['game_index'] as int?,
+      gameIndex: (json['game_index'] as num?)?.toInt(),
       version: json['version'] == null
           ? null
           : Species.fromJson(json['version'] as Map<String, dynamic>),
@@ -117,7 +117,7 @@ Map<String, dynamic> _$MoveToJson(Move instance) => <String, dynamic>{
 
 VersionGroupDetail _$VersionGroupDetailFromJson(Map<String, dynamic> json) =>
     VersionGroupDetail(
-      levelLearnedAt: json['level_learned_at'] as int?,
+      levelLearnedAt: (json['level_learned_at'] as num?)?.toInt(),
       moveLearnMethod: json['move_learn_method'] == null
           ? null
           : Species.fromJson(json['move_learn_method'] as Map<String, dynamic>),
@@ -436,8 +436,8 @@ Map<String, dynamic> _$OtherToJson(Other instance) => <String, dynamic>{
     };
 
 Stat _$StatFromJson(Map<String, dynamic> json) => Stat(
-      baseStat: json['base_stat'] as int?,
-      effort: json['effort'] as int?,
+      baseStat: (json['base_stat'] as num?)?.toInt(),
+      effort: (json['effort'] as num?)?.toInt(),
       stat: json['stat'] == null
           ? null
           : Species.fromJson(json['stat'] as Map<String, dynamic>),
@@ -450,7 +450,7 @@ Map<String, dynamic> _$StatToJson(Stat instance) => <String, dynamic>{
     };
 
 Type _$TypeFromJson(Map<String, dynamic> json) => Type(
-      slot: json['slot'] as int?,
+      slot: (json['slot'] as num?)?.toInt(),
       type: json['type'] == null
           ? null
           : Species.fromJson(json['type'] as Map<String, dynamic>),

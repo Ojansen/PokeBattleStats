@@ -96,19 +96,7 @@ Future<dynamic> _futureTypeList(Database db) async {
   List<Map<String, dynamic>> list = await db.query('type');
   if (list.isNotEmpty) {
     print("List is not empty");
-    List<TypeModel> result = [];
-
-    for (Map<String, dynamic> map in list) {
-      result.add(TypeModel(
-        id: map['id'],
-        name: map['name'],
-        // damageClass: map['damageClass'],
-        doubleTo: map['doubleTo'],
-        halfTo: map['halfTo'],
-        noTo: map['noTo'],
-      ));
-    }
-    return result;
+    return list;
   } else {
     var response = await http.get(Uri.parse('https://pokeapi.co/api/v2/type'));
     if (response.statusCode == 200) {
@@ -119,12 +107,13 @@ Future<dynamic> _futureTypeList(Database db) async {
 
       List<TypeModel> type = [];
       for (var index in types) {
-        var typeRequest = await http.get(Uri.parse(index));
+        print(index);
+        var typeRequest = await http.get(Uri.parse(index.url));
         if (jsonDecode(typeRequest.body)['id'] < 19) {
           type.add(TypeModel.fromJson(
             jsonDecode(typeRequest.body),
           ));
-          db.insert('type', TypeModel.fromJson(jsonDecode(typeRequest.body)).toMap());
+          db.insert('type', {"typeJson": jsonEncode(typeRequest.body)});
         }
       }
       return type;
